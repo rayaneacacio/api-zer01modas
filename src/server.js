@@ -1,6 +1,7 @@
 require("express-async-errors");
 const express = require("express");
 const AppError = require("./utils/AppError");
+const sqliteConnection = require("./database/sqlite/index");
 const app = express();
 
 const PORT = 3333;
@@ -28,3 +29,5 @@ app.use((error, request, response, next) => {
 app.get("/", (request, response) => {
   response.json("HELLO WORLD :)");
 });
+
+sqliteConnection();
