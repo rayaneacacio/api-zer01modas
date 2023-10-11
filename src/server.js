@@ -26,5 +26,5 @@ app.use((error, request, response, next) => {
 });
 
 app.get("/", (request, response) => {
-  response.josn("HELLO WORLD :)");
+  response.json("HELLO WORLD :)");
 });
