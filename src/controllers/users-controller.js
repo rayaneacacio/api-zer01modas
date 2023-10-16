@@ -1,10 +1,8 @@
-const { hash } = require("bcryptjs");
 const UsersRepository = require("../repositories/users-repository");
 const UsersServices = require("../services/users/users-services");
 
 class UsersController {
   async create(request, response) {
-    //criar um novo usuário;
     const { name, email, password, isAdmin } = request.body;
 
     const usersRepository = new UsersRepository();
@@ -18,7 +16,6 @@ class UsersController {
   }
 
   async index(request, response) {
-    //listar todos os usuários;
     const usersRepository = new UsersRepository();
     const users = await usersRepository.allUsers();
 
@@ -26,25 +23,16 @@ class UsersController {
   }
 
   async show(request, response) {
-    //buscar um usuário;
-    const { id, email } = request.body;
+    const { id } = request.user;
     
     const usersRepository = new UsersRepository();
-    let user = null;
-
-    if(id) {
-      user = await usersRepository.findById(id);
-    } else if(email) {
-      user = await usersRepository.findByEmail(email);
-    }
+    const user = await usersRepository.findById(id);
 
     return response.json(user);
   }
 
   async update(request, response) {
-    //atualizar um usuário;
-    //buscar pelo token;
-    const { id } = request.query;
+    const { id } = request.user;
     const { oldPassword, name, email, password } = request.body;
 
     const usersRepository = new UsersRepository();
@@ -53,18 +41,13 @@ class UsersController {
     const user = await usersRepository.findById(Number(id));
     await usersServices.verifyPassowrd({ password: oldPassword, userPassword: user.password });
 
-    const newName = name ?? user.name;
-    const newEmail = email ?? user.email;
-    const newPassword = password ? await hash(password, 10) : user.password;
-
-    await usersRepository.updateUser(newName, newEmail, newPassword, id);
+    await usersRepository.updateUser(user, name, email, password);
 
     return response.json();
   }
 
   async delete(request, response) {
-    //deletar um usuário;
-    const { id } = request.query;
+    const { id } = request.user;
     const { password } = request.body;
 
     const usersRepository = new UsersRepository();

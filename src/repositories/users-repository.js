@@ -23,8 +23,12 @@ class UsersRepository {
     return await knex("users");
   }
 
-  async updateUser(newName, newEmail, newPassword, id) {
-    await knex("users").update({ name: newName, email: newEmail, password: newPassword }).where({ id: Number(id) });
+  async updateUser(user, name, email, password) {
+    const newName = name ?? user.name;
+    const newEmail = email ?? user.email;
+    const newPassword = password ? await hash(password, 10) : user.password;
+
+    await knex("users").update({ name: newName, email: newEmail, password: newPassword }).where({ id: user.id });
   }
 
   async deleteById(id) {

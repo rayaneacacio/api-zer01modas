@@ -9,7 +9,7 @@ class UsersServices {
   async verifyEmail(email) {
     const user = await this.usersRepository.findByEmail(email);
 
-    if(user.length > 0) {
+    if(user) {
       throw new AppError("O email já existe");
     }
 
