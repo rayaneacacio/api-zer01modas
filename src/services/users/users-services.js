@@ -19,7 +19,7 @@ class UsersServices {
   async verifyPassowrd({ password, userPassword }) {
     const checkPassowrd = await compare(password, userPassword);
     if(!checkPassowrd) {
-      throw new AppError("senha incorreta");
+      throw new AppError("E-mail ou senha incorreta");
     }
   }
 }
