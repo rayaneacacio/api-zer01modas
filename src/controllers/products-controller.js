@@ -52,9 +52,9 @@ class ProductsController {
     const { products } = request.body;
     const productsRepository = new ProductsRepository();
 
-    products.forEach(async (id) => {
+    for(let id of products) {
       await productsRepository.deleteById(id);
-    });
+    }
 
     return response.json();
   }
