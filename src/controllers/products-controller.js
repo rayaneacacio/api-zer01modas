@@ -29,12 +29,12 @@ class ProductsController {
   }
 
   async show(request, response) {
-    const { id } = request.query;
+    const { name } = request.body;
     const productsRepository = new ProductsRepository();
 
-    const product = await productsRepository.findById(id);
+    const products = await productsRepository.findByTitle(name);
 
-    return response.json(product);
+    return response.json(products);
   }
 
   async update(request, response) {

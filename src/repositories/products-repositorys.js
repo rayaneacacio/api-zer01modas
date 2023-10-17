@@ -22,6 +22,10 @@ class ProductsRepository {
     return await knex("products").where({ id }).first();
   }
 
+  async findByTitle(name) {
+    return await knex("products").whereLike("name", `%${name}%`);
+  }
+
   async update(product, name, category, price, description, score) {
     const newName = name ?? product.name;
     const newCategory = category ?? product.category;
