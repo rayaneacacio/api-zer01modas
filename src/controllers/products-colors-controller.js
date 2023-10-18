@@ -1,36 +1,49 @@
-const knex = require("../database/knex/index");
+const ProductsColorsRepository = require("../repositories/products-colors-repository");
 
 class ProductsColorsController {
   async create(request, response) {
-    const { product_id, color } = request.body;
+    const { product_id, colors } = request.body;
+    const productsColorsRepository = new ProductsColorsRepository();
 
-    await knex("products_colors").insert({ product_id, color });
+    const colorsInsert = colors.map(color => {
+      return {
+        product_id,
+        color
+      }
+    });
+
+    await productsColorsRepository.create(colorsInsert);
 
     return response.json();
   }
 
-  async indexByProduct_id(request, response) {
+  async indexColors(request, response) {
     //retorna todas as cores de um produto;
     const { product_id } = request.query;
+    const productsColorsRepository = new ProductsColorsRepository();
 
-    const colors = await knex("products_colors").where({ product_id });
+    const colors = await productsColorsRepository.findByProductId(product_id);
 
     return response.json(colors);
   }
 
-  async indexByColor(request, response) {
+  async indexProducts(request, response) {
     //retorna todos os produtos da cor solicitada;
     const { color } = request.query;
+    const productsColorsRepository = new ProductsColorsRepository();
 
-    const colors = await knex("products_colors").where({ color });
+    const colors = await productsColorsRepository.findByColor(color);
 
     return response.json(colors);
   }
 
   async delete(request, response) {
-    const { id } = request.query;
+    const { product_id, colors } = request.body;
+    const productsColorsRepository = new ProductsColorsRepository();
 
-    await knex("products_colors").delete().where({ id });
+    for(const color of colors) {
+      await productsColorsRepository.delete(product_id, color);
+    }
 
     return response.json();
   }

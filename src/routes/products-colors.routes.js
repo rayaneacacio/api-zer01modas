@@ -9,8 +9,8 @@ const productsColorsRoutes = Router();
 
 productsColorsRoutes.use(EnsureAuthenticated);
 productsColorsRoutes.post("/", productsColorsController.create);
-productsColorsRoutes.get("/index_colors", productsColorsController.indexByProduct_id);
-productsColorsRoutes.get("/index_products", productsColorsController.indexByColor);
-productsColorsRoutes.delete("/", productsColorsController.delete);
+productsColorsRoutes.get("/index_colors", productsColorsController.indexColors);
+productsColorsRoutes.get("/index_products", productsColorsController.indexProducts);
+productsColorsRoutes.post("/delete", productsColorsController.delete);
 
 module.exports = productsColorsRoutes;
