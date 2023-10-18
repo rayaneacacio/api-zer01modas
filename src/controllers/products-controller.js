@@ -1,8 +1,9 @@
 const ProductsRepository = require("../repositories/products-repositorys");
+const ProductsServices = require("../services/products/products-services");
 
 class ProductsController {
   async create(request, response) {
-    const { name, category, price, promotion, description, score } = request.body;
+    const { name, category, price, description, score } = request.body;
     const productsRepository = new ProductsRepository();
 
     const product_id = await productsRepository.create(name, category, price, description);
@@ -32,9 +33,12 @@ class ProductsController {
     const { name } = request.body;
     const productsRepository = new ProductsRepository();
 
-    const products = await productsRepository.findByTitle(name);
+    const productsList = await productsRepository.findByTitle(name);
 
-    return response.json(products);
+    const productsServices = new ProductsServices(productsRepository);
+    productsServices.checkIfProductListIsEmpty(productsList);
+
+    return response.json(productsList);
   }
 
   async update(request, response) {
