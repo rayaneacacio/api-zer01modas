@@ -1,9 +1,10 @@
-const knex = require("../database/knex/index");
-const AppError = require("../utils/AppError");
+const ProductsSizesRepository = require("../repositories/products-sizes-repository");
+const ProductsSizesServices = require("../services/products-sizes/products-sizes-services");
 
 class ProductsSizesController {
   async create(request, response) {
     const { product_id, color_id, sizes } = request.body;
+    const productsSizesRepository = new ProductsSizesRepository();
 
     const sizesInsert = sizes.map(size => {
       return {
@@ -13,7 +14,7 @@ class ProductsSizesController {
       }
     });
 
-    await knex("products_sizes").insert(sizesInsert);
+    await productsSizesRepository.insert(sizesInsert);
 
     return response.json();
   }
@@ -21,21 +22,12 @@ class ProductsSizesController {
   async indexBySize(request, response) {
     //retorna todos os produtos de um tamanho;
     const { size } = request.query;
+    const productsSizesRepository = new ProductsSizesRepository();
+    const productsSizesServices = new ProductsSizesServices();
 
-    const list = await knex("products_sizes").where({ size });
-    
-    const products = [];
-    for(const item of list) {
-      let product = await knex("products").where({ id: item.product_id }).first();
+    const products = await productsSizesRepository.findAllBySize(size);
 
-      if(!products.some(p => p.id == product.id)) {
-        products.push(product);
-      }
-    };
-
-    if(products.length < 1) {
-      throw new AppError("Nenhum produto disponível");
-    }
+    productsSizesServices.checkProducts(products);
 
     return response.json(products);
   }
@@ -43,16 +35,18 @@ class ProductsSizesController {
   async indexByColor(request, response) {
     //retorna todos os tamanhos de uma cor do produto;
     const { product_id, color_id } = request.query;
+    const productsSizesRepository = new ProductsSizesRepository();
 
-    const sizes = await knex("products_sizes").where({ product_id, color_id });
+    const sizes = await productsSizesRepository.findByColor(product_id, color_id);
 
     return response.json(sizes);
   }
 
   async delete(request, response) {
     const { color_id } = request.query;
+    const productsSizesRepository = new ProductsSizesRepository();
 
-    await knex("products_sizes").delete().where({ color_id });
+    await productsSizesRepository.deleteAllByColor(color_id);
 
     return response.json();
   }
