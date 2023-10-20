@@ -1,8 +1,9 @@
-const knex = require("../database/knex/index");
+const ProductsDetailsRepository = require("../repositories/products-details-repository");
 
 class ProductsDetailsController{
   async create(request, response) {
     const { product_id, details } = request.body;
+    const productsDetailsRepository = new ProductsDetailsRepository();
 
     const detailsInsert = details.map(detail => {
       return {
@@ -11,23 +12,25 @@ class ProductsDetailsController{
       }
     });
 
-    await knex("products_details").insert(detailsInsert);
+    await productsDetailsRepository.insert(detailsInsert);
 
     return response.json(detailsInsert);
   }
 
   async index(request, response) {
     const { product_id } = request.query;
+    const productsDetailsRepository = new ProductsDetailsRepository();
 
-    const details = await knex("products_details").where({ product_id });
+    const details = await productsDetailsRepository.findByProductId(product_id);
 
     return response.json(details);
   }
 
   async delete(request, response) {
     const { product_id } = request.query;
+    const productsDetailsRepository = new ProductsDetailsRepository();
 
-    await knex("products_details").delete().where({ product_id });
+    await productsDetailsRepository.delete(product_id);
 
     return response.json();
   }
