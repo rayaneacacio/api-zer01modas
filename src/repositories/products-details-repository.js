@@ -1,16 +1,16 @@
 const knex = require("../database/knex/index");
 
 class ProductsDetailsRepository {
-  async insert(detailsInsert) {
-    await knex("products_details").insert(detailsInsert);
+  async insert(table, detailsInsert) {
+    await knex(table).insert(detailsInsert);
   }
 
-  async findByProductId(product_id) {
-    return await knex("products_details").where({ product_id });
+  async findByProductId(table, product_id) {
+    return await knex(table).where({ product_id });
   }
 
-  async delete(product_id) {
-    await knex("products_details").delete().where({ product_id });
+  async delete(table, product_id) {
+    await knex(table).delete().where({ product_id });
   }
 }
 

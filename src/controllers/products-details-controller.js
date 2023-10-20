@@ -12,7 +12,7 @@ class ProductsDetailsController{
       }
     });
 
-    await productsDetailsRepository.insert(detailsInsert);
+    await productsDetailsRepository.insert("products_details", detailsInsert);
 
     return response.json(detailsInsert);
   }
@@ -21,7 +21,7 @@ class ProductsDetailsController{
     const { product_id } = request.query;
     const productsDetailsRepository = new ProductsDetailsRepository();
 
-    const details = await productsDetailsRepository.findByProductId(product_id);
+    const details = await productsDetailsRepository.findByProductId("products_details", product_id);
 
     return response.json(details);
   }
@@ -30,7 +30,7 @@ class ProductsDetailsController{
     const { product_id } = request.query;
     const productsDetailsRepository = new ProductsDetailsRepository();
 
-    await productsDetailsRepository.delete(product_id);
+    await productsDetailsRepository.delete("products_details", product_id);
 
     return response.json();
   }
