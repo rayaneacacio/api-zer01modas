@@ -1,10 +1,14 @@
 const ProductsCommentsRepository = require("../repositories/products-comments-repository");
+const ProductsCommentsServices = require("../services/products-comments/products_comments-services");
 
 class ProductsCommentsController {
   async create(request, response) {
     const user_id = request.user.id;
     const { product_id, comment, score } = request.body;
     const productsCommentsRepository = new ProductsCommentsRepository();
+    const productsCommentsServices = new ProductsCommentsServices(productsCommentsRepository);
+
+    await productsCommentsServices.verifyComments(user_id, product_id);
 
     await productsCommentsRepository.create(user_id, product_id, comment, score);
     await productsCommentsRepository.calculateAverageScore(product_id);
