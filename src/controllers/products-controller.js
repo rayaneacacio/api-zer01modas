@@ -3,15 +3,11 @@ const ProductsServices = require("../services/products/products-services");
 
 class ProductsController {
   async create(request, response) {
-    const { name, category, price, description, score } = request.body;
+    const { name, category, price, description } = request.body;
     const productsRepository = new ProductsRepository();
 
     const real = Number(price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const product_id = await productsRepository.create(name, category, real, description);
-
-    if(score) {
-      await productsRepository.patchScore(product_id, score);
-    }
+    await productsRepository.create(name, category, real, description);
 
     return response.json();
   }
@@ -44,11 +40,11 @@ class ProductsController {
 
   async update(request, response) {
     const { id } = request.query;
-    const { name, category, price, description, score } = request.body;
+    const { name, category, price, description } = request.body;
     const productsRepository = new ProductsRepository();
 
     const product = await productsRepository.findById(id);
-    await productsRepository.update(product, name, category, price, description, score);
+    await productsRepository.update(product, name, category, price, description);
 
     return response.json();
   }

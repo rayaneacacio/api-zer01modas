@@ -6,10 +6,6 @@ class ProductsRepository {
     return product_id;
   }
 
-  async patchScore(id, score) {
-    await knex("products").update({ score }).where({ id });
-  }
-
   async allProducts() {
     return await knex("products");
   }
@@ -26,14 +22,17 @@ class ProductsRepository {
     return await knex("products").whereLike("name", `%${name}%`);
   }
 
-  async update(product, name, category, price, description, score) {
+  async update(product, name, category, price, description) {
     const newName = name ?? product.name;
     const newCategory = category ?? product.category;
-    const newPrice = Number(price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) ?? product.price;
+    let newPrice = product.price;
     const newDescription = description ?? product.description;
-    const newScore = score ?? product.score;
 
-    await knex("products").update({ name: newName, category: newCategory, price: newPrice, description: newDescription, score: newScore }).where({ id: product.id });
+    if(price) {
+      newPrice = Number(price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    await knex("products").update({ name: newName, category: newCategory, price: newPrice, description: newDescription }).where({ id: product.id });
   }
 
   async deleteById(id) {
