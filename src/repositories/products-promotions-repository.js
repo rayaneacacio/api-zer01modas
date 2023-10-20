@@ -1,6 +1,15 @@
 const knex = require("../database/knex/index");
 
 class ProductsPromotionsRepository {
+  calculateValue(product_price, percentage) {
+    let new_price = (product_price).replace(/[^0-9,]/g, ""); //remove tudo exceto números e vírgulas;
+    new_price = parseFloat(new_price.replace(",", ".")); //substitui a vírgula por um ponto;
+    new_price = (new_price - (new_price * percentage)/100).toFixed(2); //calcula o desconto;
+    new_price = Number(new_price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); //formata o número como uma string de moeda brasileira (Real);
+
+    return new_price;
+  }
+
   async createDiscount(product_id, percentage, new_price) {
     await knex("products_promotions").insert({ product_id, percentage, new_price });
   }

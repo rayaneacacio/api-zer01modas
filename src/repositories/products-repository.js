@@ -29,7 +29,7 @@ class ProductsRepository {
   async update(product, name, category, price, description, score) {
     const newName = name ?? product.name;
     const newCategory = category ?? product.category;
-    const newPrice = price ?? product.price;
+    const newPrice = Number(price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) ?? product.price;
     const newDescription = description ?? product.description;
     const newScore = score ?? product.score;
 

@@ -6,7 +6,8 @@ class ProductsController {
     const { name, category, price, description, score } = request.body;
     const productsRepository = new ProductsRepository();
 
-    const product_id = await productsRepository.create(name, category, price, description);
+    const real = Number(price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const product_id = await productsRepository.create(name, category, real, description);
 
     if(score) {
       await productsRepository.patchScore(product_id, score);

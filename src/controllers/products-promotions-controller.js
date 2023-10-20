@@ -10,8 +10,7 @@ class ProductsPromotionsController {
 
     const product = await productsRepository.findById(product_id);
 
-    const new_price = product.price - ((product.price * percentage)/100);
-
+    let new_price = productsPromotionsRepository.calculateValue(product.price, percentage);
     productsPromotionsRepository.createDiscount(product_id, percentage, new_price);
 
     return response.json(new_price);
@@ -48,7 +47,7 @@ class ProductsPromotionsController {
 
     const product = await productsRepository.findById(product_id);
 
-    const new_price = product.price - ((product.price * percentage)/100);
+    let new_price = productsPromotionsRepository.calculateValue(product.price, percentage);
 
     productsPromotionsRepository.update(product_id, percentage, new_price);
 
