@@ -11,7 +11,7 @@ class SessionsController {
     const usersServices = new UsersServices(usersRepository);
 
     const sessionsRepository = new SessionsRepository();
-    const sessionsServices = new SessionsServices(sessionsRepository);
+    const sessionsServices = new SessionsServices();
 
     const user = await usersRepository.findByEmail(email);
 

@@ -7,13 +7,21 @@ class UsersServices {
   }
 
   async verifyEmail(email) {
-    const user = await this.usersRepository.findByEmail(email);
+    const users = await this.usersRepository.allUsers();
 
-    if(user) {
+    try {
+      await Promise.all(users.map(async (user) => {
+        const checkEmail = await compare(email, user.email);
+
+        if(checkEmail) {
+          throw error;
+        }
+      }));
+
+    } catch {
       throw new AppError("O email já existe");
     }
 
-    return user;
   }
 
   async verifyPassowrd({ password, userPassword }) {
