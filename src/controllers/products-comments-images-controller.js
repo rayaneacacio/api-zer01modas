@@ -1,4 +1,3 @@
-const knex = require("../database/knex/index");
 const ProductsImagesRepository = require("../repositories/products-images-repository");
 const ProductsCommentsImagesRepository = require("../repositories/products-comments-images-repository");
 

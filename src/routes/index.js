@@ -11,6 +11,7 @@ const productsDetailsRoutes = require("./products-details.routes");
 const productsModelDetailsRoutes = require("./products-model-details.routes");
 const productsCommentsRoutes = require("./products-comments.routes");
 const productsCommentsImagesRoutes = require("./products-comments-images.routes");
+const addressRoutes = require("./address.routes");
 
 const routes = Router();
 
@@ -25,5 +26,6 @@ routes.use("/products_details", productsDetailsRoutes);
 routes.use("/products_model_details", productsModelDetailsRoutes);
 routes.use("/products_comments", productsCommentsRoutes);
 routes.use("/products_comments_images", productsCommentsImagesRoutes);
+routes.use("/address", addressRoutes);
 
 module.exports = routes;
