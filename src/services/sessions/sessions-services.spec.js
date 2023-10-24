@@ -5,6 +5,6 @@ describe("SessionsServices", () => {
   it("verifica se o user existe", async() => {
     const sessionsServices = new SessionsServices();
     
-    expect(sessionsServices.verifyUserExists()).rejects.toEqual(new AppError("E-mail ou senha incorreta"));
+    await expect(sessionsServices.verifyUserExists()).rejects.toEqual(new AppError("E-mail ou senha incorreta"));
   });
 });
