@@ -16,7 +16,7 @@ class UsersRepository {
     await knex("users").insert({ name, email, password: hashedPassword });
 
     if(isAdmin) {
-      await knex("users").update({ isAdmin }).where({ email: hashedEmail });
+      await knex("users").update({ isAdmin }).where({ email });
     }
   }
 
