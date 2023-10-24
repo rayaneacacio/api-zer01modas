@@ -1,7 +1,7 @@
 const AppError = require("../../utils/AppError");
 
 class ProductsServices {
-  checkIfProductListIsEmpty(productsList) {
+  async checkIfProductListIsEmpty(productsList) {
     if(productsList.length < 1) {
       throw new AppError("Oops! Produto não encontrado. Explore mais opções em nossa loja!");
     }
