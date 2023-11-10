@@ -2,19 +2,12 @@ const ProductsColorsRepository = require("../repositories/products-colors-reposi
 
 class ProductsColorsController {
   async create(request, response) {
-    const { product_id, colors } = request.body;
+    const { product_id, color } = request.body;
     const productsColorsRepository = new ProductsColorsRepository();
 
-    const colorsInsert = colors.map(color => {
-      return {
-        product_id,
-        color
-      }
-    });
+    const id = await productsColorsRepository.create({ product_id, name: color.name, hex: color.hex });
 
-    await productsColorsRepository.create(colorsInsert);
-
-    return response.json();
+    return response.json(id);
   }
 
   async indexColors(request, response) {
@@ -42,7 +35,7 @@ class ProductsColorsController {
     const productsColorsRepository = new ProductsColorsRepository();
 
     for(const color of colors) {
-      await productsColorsRepository.delete(product_id, color);
+      await productsColorsRepository.delete({product_id, name: color.name, hex: color.hex });
     }
 
     return response.json();

@@ -1,8 +1,9 @@
 const knex = require("../database/knex/index");
 
 class ProductsColorsRepository {
-  async create(colors) {
-    await knex("products_colors").insert(colors);
+  async create({ product_id, name, hex }) {
+    const [ id ] = await knex("products_colors").insert({ product_id, name, hex });
+    return id;
   }
 
   async findByProductId(product_id) {
@@ -13,8 +14,8 @@ class ProductsColorsRepository {
     return await knex("products_colors").where({ color });
   }
 
-  async delete(product_id, color) {
-    await knex("products_colors").delete().where({ product_id, color });
+  async delete({ product_id, name, hex }) {
+    await knex("products_colors").delete().where({ product_id, name, hex });
   }
 }
 
