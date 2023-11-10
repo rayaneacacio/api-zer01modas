@@ -15,6 +15,17 @@ class ProductsImagesController {
   }
 
   async index(request, response) {
+    //retorna todas as imagens de um produto;
+    const { product_id } = request.query;
+    const productsImagesRepository = new ProductsImagesRepository();
+
+    const images = await productsImagesRepository.allImgsOfProduct(product_id);
+
+    return response.json(images);
+  }
+
+  async indexByColor(request, response) {
+    //retorna um array de imagens por cor de um produto;
     const { product_id, color_id } = request.query;
     const productsImagesRepository = new ProductsImagesRepository();
 
@@ -25,15 +36,22 @@ class ProductsImagesController {
   }
 
   async delete(request, response) {
-    const { product_id, color_id } = request.query;
+    const { product_id, color_id } = request.body;
     const productsImagesRepository = new ProductsImagesRepository();
 
-    const array = await productsImagesRepository.findByColor(product_id, color_id);
+    let array = [];
+
+    if(color_id) {
+      array = await productsImagesRepository.findByColor(product_id, color_id);
+      await productsImagesRepository.deleteInDatabase(color_id);
+
+    } else {
+      array = await productsImagesRepository.allImgsOfProduct(product_id);
+    }
+
     array.map(async (n) => {
       await productsImagesRepository.deleteInDiskStorage(n.image);
     });
-
-    await productsImagesRepository.deleteInDatabase(color_id);
 
     return response.json();
   }

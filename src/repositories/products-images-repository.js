@@ -16,6 +16,10 @@ class ProductsImagesRepository {
     return await knex("products_images").where({ product_id, color_id });
   }
 
+  async allImgsOfProduct(product_id) {
+    return await knex("products_images").where({ product_id });
+  }
+
   async deleteInDiskStorage(filename) {
     const diskStorage = new DiskStorage();
 

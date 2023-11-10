@@ -6,14 +6,11 @@ const upload = multer(uploadConfig.MULTER);
 const ProductsImagesController = require("../controllers/products-images-controller");
 const productsImagesController = new ProductsImagesController();
 
-const EnsureAuthenticated = require("../middlewares/ensureAuthenticated");
-
 const productsImagesRoutes = Router();
 
-productsImagesRoutes.use(EnsureAuthenticated);
-
 productsImagesRoutes.post("/", upload.array("images"), productsImagesController.create);
+productsImagesRoutes.get("/index_by_color", productsImagesController.indexByColor);
 productsImagesRoutes.get("/index", productsImagesController.index);
-productsImagesRoutes.delete("/delete", productsImagesController.delete);
+productsImagesRoutes.post("/delete", productsImagesController.delete);
 
 module.exports = productsImagesRoutes;
