@@ -32,12 +32,12 @@ class ProductsSizesController {
     return response.json(products);
   }
 
-  async indexByColor(request, response) {
-    //retorna todos os tamanhos de uma cor do produto;
-    const { product_id, color_id } = request.query;
+  async index(request, response) {
+    //retorna todos os tamanhos do produto;
+    const { product_id } = request.query;
     const productsSizesRepository = new ProductsSizesRepository();
 
-    const sizes = await productsSizesRepository.findByColor(product_id, color_id);
+    const sizes = await productsSizesRepository.findById(product_id);
 
     return response.json(sizes);
   }

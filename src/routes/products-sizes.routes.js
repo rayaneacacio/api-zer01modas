@@ -7,11 +7,9 @@ const EnsureAuthenticated = require("../middlewares/ensureAuthenticated");
 
 const productsSizesRoutes = Router();
 
-productsSizesRoutes.use(EnsureAuthenticated);
-
-productsSizesRoutes.post("/", productsSizesController.create);
+productsSizesRoutes.post("/", EnsureAuthenticated, productsSizesController.create);
 productsSizesRoutes.get("/index_bysize", productsSizesController.indexBySize);
-productsSizesRoutes.get("/index_bycolor", productsSizesController.indexByColor);
-productsSizesRoutes.delete("/delete", productsSizesController.delete);
+productsSizesRoutes.get("/index", productsSizesController.index);
+productsSizesRoutes.delete("/delete", EnsureAuthenticated, productsSizesController.delete);
 
 module.exports = productsSizesRoutes;

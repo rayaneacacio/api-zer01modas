@@ -20,8 +20,8 @@ class ProductsSizesRepository {
     return products;
   }
 
-  async findByColor(product_id, color_id) {
-    return await knex("products_sizes").where({ product_id, color_id });
+  async findById(product_id) {
+    return await knex("products_sizes").where({ product_id });
   }
 
   async deleteAllByColor(color_id) {
