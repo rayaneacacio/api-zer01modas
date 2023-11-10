@@ -1,7 +1,8 @@
 exports.up = knex => knex.schema.createTable("products_colors", table => {
   table.increments("id");
   table.integer("product_id").references("id").inTable("products").onDelete("CASCADE");
-  table.text("color");
+  table.text("name");
+  table.text("hex");
   table.timestamp("created_at").default(knex.fn.now());
   table.timestamp("updated_at").default(knex.fn.now());
 });
