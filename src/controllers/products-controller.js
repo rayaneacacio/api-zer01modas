@@ -7,9 +7,9 @@ class ProductsController {
     const productsRepository = new ProductsRepository();
 
     const real = Number(price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    await productsRepository.create(name, category, real, description);
+    const product_id = await productsRepository.create(name, category, real, description);
 
-    return response.json();
+    return response.json(product_id);
   }
 
   async index(request, response) {
@@ -27,15 +27,12 @@ class ProductsController {
   }
 
   async show(request, response) {
-    const { name } = request.body;
+    const { id } = request.query;
     const productsRepository = new ProductsRepository();
 
-    const productsList = await productsRepository.findByTitle(name);
-
-    const productsServices = new ProductsServices(productsRepository);
-    productsServices.checkIfProductListIsEmpty(productsList);
-
-    return response.json(productsList);
+    const product = await productsRepository.findById(id);
+    
+    return response.json(product);
   }
 
   async update(request, response) {

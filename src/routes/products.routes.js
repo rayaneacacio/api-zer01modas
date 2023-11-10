@@ -7,12 +7,10 @@ const EnsureAuthenticated = require("../middlewares/ensureAuthenticated");
 
 const productsRoutes = Router();
 
-productsRoutes.use(EnsureAuthenticated);
-
-productsRoutes.post("/", productsController.create);
+productsRoutes.post("/", EnsureAuthenticated, productsController.create);
 productsRoutes.get("/index", productsController.index);
 productsRoutes.get("/show", productsController.show);
-productsRoutes.patch("/", productsController.update);
-productsRoutes.post("/delete", productsController.delete);
+productsRoutes.patch("/", EnsureAuthenticated, productsController.update);
+productsRoutes.post("/delete", EnsureAuthenticated, productsController.delete);
 
 module.exports = productsRoutes;
