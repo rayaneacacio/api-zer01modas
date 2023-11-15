@@ -29,7 +29,8 @@ class ProductsRepository {
     const newDescription = description ?? product.description;
 
     if(price) {
-      newPrice = Number(price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      newPrice = price.replace(",", ".");
+      newPrice = Number(newPrice).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
     await knex("products").update({ name: newName, category: newCategory, price: newPrice, description: newDescription }).where({ id: product.id });

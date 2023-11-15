@@ -33,7 +33,7 @@ class ProductsColorsController {
   async delete(request, response) {
     const { product_id, colors } = request.body;
     const productsColorsRepository = new ProductsColorsRepository();
-
+    
     for(const color of colors) {
       await productsColorsRepository.delete({product_id, name: color.name, hex: color.hex });
     }
