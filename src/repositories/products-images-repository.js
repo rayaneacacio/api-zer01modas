@@ -8,12 +8,12 @@ class ProductsImagesRepository {
     return await diskStorage.saveFile(filename);
   }
 
-  async saveInDatabase(product_id, color_id, image) {
-    await knex("products_images").insert({ product_id, color_id, image });
+  async saveInDatabase(product_id, color_id, color_hex, image) {
+    await knex("products_images").insert({ product_id, color_id, color_hex: "#"+color_hex, image });
   }
 
-  async findByColor(product_id, color_id) {
-    return await knex("products_images").where({ product_id, color_id });
+  async findByColor(product_id, color_hex) {
+    return await knex("products_images").where({ product_id, color_hex });
   }
 
   async allImgsOfProduct(product_id) {
@@ -22,12 +22,11 @@ class ProductsImagesRepository {
 
   async deleteInDiskStorage(filename) {
     const diskStorage = new DiskStorage();
-
     await diskStorage.deleteFile(filename);
   }
 
-  async deleteInDatabase(color_id) {
-    await knex("products_images").delete().where({ color_id });
+  async deleteInDatabase(product_id, color_hex) {
+    await knex("products_images").delete().where({ product_id, color_hex });
   }
 }
 

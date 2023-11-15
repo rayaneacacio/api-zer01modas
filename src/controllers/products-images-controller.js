@@ -2,13 +2,14 @@ const ProductsImagesRepository = require("../repositories/products-images-reposi
 
 class ProductsImagesController {
   async create(request, response) {
-    const { product_id, color_id } = request.query;
+    const { product_id, color_id, color_hex } = request.query;
+    
     const imgsFilename = request.files;
     const productsImagesRepository = new ProductsImagesRepository();
 
     for(const img of imgsFilename) {
       const filename = await productsImagesRepository.saveInDiskStorage(img.filename);
-      await productsImagesRepository.saveInDatabase(product_id, color_id, filename);
+      await productsImagesRepository.saveInDatabase(product_id, color_id, color_hex, filename);
     };
 
     return response.json();
@@ -36,15 +37,14 @@ class ProductsImagesController {
   }
 
   async delete(request, response) {
-    const { product_id, color_id } = request.body;
+    const { product_id, color_hex } = request.body;
     const productsImagesRepository = new ProductsImagesRepository();
 
     let array = [];
 
-    if(color_id) {
-      array = await productsImagesRepository.findByColor(product_id, color_id);
-      await productsImagesRepository.deleteInDatabase(color_id);
-
+    if(color_hex) {
+      array = await productsImagesRepository.findByColor(product_id, color_hex);
+      await productsImagesRepository.deleteInDatabase(product_id, color_hex);
     } else {
       array = await productsImagesRepository.allImgsOfProduct(product_id);
     }
