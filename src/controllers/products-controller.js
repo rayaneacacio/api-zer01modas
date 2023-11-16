@@ -1,5 +1,4 @@
 const ProductsRepository = require("../repositories/products-repository");
-const ProductsServices = require("../services/products/products-services");
 
 class ProductsController {
   async create(request, response) {
@@ -28,40 +27,20 @@ class ProductsController {
     return response.json(products);
   }
 
-  // async show(request, response) {
-  //   const { id } = request.query;
-  //   const productsRepository = new ProductsRepository();
-
-  //   const product = await productsRepository.findById(id);
-    
-  //   return response.json(product);
-  // }
-
   async show(request, response) {
     const { name, id } = request.body;
     const productsRepository = new ProductsRepository();
-    const productsServices = new ProductsServices(productsRepository);
     let productsList = [];
 
-    try {
-      if(name) {
-        productsList = await productsRepository.findByTitle(name);
+    if(name) {
+      productsList = await productsRepository.findByTitle(name);
 
-        if(productsList.length == 0) {
-          await productsServices.checkIfProductListIsEmpty(productsList);
-        }
-
-      } else {
-        productsList = await productsRepository.findById(id);
-      }
-      
-      return response.json(productsList);
-
-    } catch(error) {
-      console.log(error);
-
-      return response.status(500).json(error);
+    } else {
+      const product = await productsRepository.findById(id);
+      productsList.push(product);
     }
+      
+    return response.json(productsList);
   }
 
   async update(request, response) {
