@@ -30,6 +30,10 @@ class ProductsPromotionsRepository {
     return products;
   }
 
+  async findByProduct(product_id) {
+    return await knex("products_promotions").where({ product_id }).first();
+  }
+
   async update(product_id, percentage, new_price) {
     await knex("products_promotions").update({ percentage, new_price }).where({ product_id });
   }

@@ -17,6 +17,7 @@ class ProductsPromotionsController {
   }
 
   async index(request, response) {
+    //retorna todos os produtos em promocao;
     const productsPromotionsRepository = new ProductsPromotionsRepository;
 
     const promotionsList = await productsPromotionsRepository.allPromotions();
@@ -25,7 +26,8 @@ class ProductsPromotionsController {
     return response.json(products);
   }
 
-   async show(request, response) {
+   async indexByCategory(request, response) {
+    //retorna os produtos em promocao da categoria selecionada;
     const { category } = request.query;
     const productsPromotionsRepository = new ProductsPromotionsRepository();
     const productsPromotionsServices = new ProductsPromotionsServices(productsPromotionsRepository);
@@ -40,19 +42,14 @@ class ProductsPromotionsController {
     return response.json(products);
   }
 
-  async update(request, response) {
-    const { product_id, percentage } = request.body;
-    const productsRepository = new ProductsRepository();
+  async show(request, response) {
+    const { product_id } = request.query;
+
     const productsPromotionsRepository = new ProductsPromotionsRepository();
+    const product = await productsPromotionsRepository.findByProduct(product_id);
 
-    const product = await productsRepository.findById(product_id);
-
-    let new_price = productsPromotionsRepository.calculateValue(product.price, percentage);
-
-    productsPromotionsRepository.update(product_id, percentage, new_price);
-
-    return response.json(new_price);
-  }
+    return response.json(product);
+  } 
 
   async delete(request, response) {
     const { product_id } = request.body;
