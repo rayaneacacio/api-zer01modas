@@ -7,8 +7,12 @@ const EnsureAuthenticated = require("../middlewares/ensureAuthenticated");
 
 const shoppingCartRoutes = Router();
 
-shoppingCartRoutes.post("/", EnsureAuthenticated, shoppingCartController.create);
-shoppingCartRoutes.get("/index", EnsureAuthenticated, shoppingCartController.index);
-shoppingCartRoutes.delete("/delete", EnsureAuthenticated, shoppingCartController.delete);
+shoppingCartRoutes.use(EnsureAuthenticated);
+
+shoppingCartRoutes.post("/", shoppingCartController.create);
+shoppingCartRoutes.post("/show", shoppingCartController.show);
+shoppingCartRoutes.get("/index", shoppingCartController.index);
+shoppingCartRoutes.patch("/patch", shoppingCartController.update);
+shoppingCartRoutes.post("/delete", shoppingCartController.delete);
 
 module.exports = shoppingCartRoutes;
