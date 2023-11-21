@@ -12,6 +12,8 @@ const productsModelDetailsRoutes = require("./products-model-details.routes");
 const productsCommentsRoutes = require("./products-comments.routes");
 const productsCommentsImagesRoutes = require("./products-comments-images.routes");
 const addressRoutes = require("./address.routes");
+const productsFavoritesRoutes = require("./products-favorites.routes");
+const shoppingCartRoutes = require("./shopping-cart.routes");
 
 const routes = Router();
 
@@ -27,5 +29,7 @@ routes.use("/products_model_details", productsModelDetailsRoutes);
 routes.use("/products_comments", productsCommentsRoutes);
 routes.use("/products_comments_images", productsCommentsImagesRoutes);
 routes.use("/address", addressRoutes);
+routes.use("/products_favorites", productsFavoritesRoutes);
+routes.use("/shopping_cart", shoppingCartRoutes);
 
 module.exports = routes;
