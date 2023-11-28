@@ -9,7 +9,7 @@ const productsImagesController = new ProductsImagesController();
 const productsImagesRoutes = Router();
 
 productsImagesRoutes.post("/", upload.array("images"), productsImagesController.create);
-productsImagesRoutes.get("/index_by_color", productsImagesController.indexByColor);
+productsImagesRoutes.get("/show", productsImagesController.show);
 productsImagesRoutes.get("/index", productsImagesController.index);
 productsImagesRoutes.post("/delete", productsImagesController.delete);
 
