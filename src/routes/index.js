@@ -14,6 +14,7 @@ const productsCommentsImagesRoutes = require("./products-comments-images.routes"
 const addressRoutes = require("./address.routes");
 const productsFavoritesRoutes = require("./products-favorites.routes");
 const shoppingCartRoutes = require("./shopping-cart.routes");
+const cuponsRoutes = require("./cupons.routes");
 
 const routes = Router();
 
@@ -31,5 +32,6 @@ routes.use("/products_comments_images", productsCommentsImagesRoutes);
 routes.use("/address", addressRoutes);
 routes.use("/products_favorites", productsFavoritesRoutes);
 routes.use("/shopping_cart", shoppingCartRoutes);
+routes.use("/cupons", cuponsRoutes);
 
 module.exports = routes;
