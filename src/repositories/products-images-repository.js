@@ -13,7 +13,7 @@ class ProductsImagesRepository {
   }
 
   async findByColor(product_id, color_hex) {
-    return await knex("products_images").where({ product_id, color_hex });
+    return await knex("products_images").where({ product_id, color_hex: "#" + color_hex }).first();
   }
 
   async allImgsOfProduct(product_id) {

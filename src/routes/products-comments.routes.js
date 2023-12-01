@@ -7,12 +7,10 @@ const EnsureAuthenticated = require("../middlewares/ensureAuthenticated");
 
 const productsCommentsRoutes = Router();
 
-productsCommentsRoutes.use(EnsureAuthenticated);
-
-productsCommentsRoutes.post("/", productsCommentsController.create);
+productsCommentsRoutes.post("/", EnsureAuthenticated, productsCommentsController.create);
 productsCommentsRoutes.get("/index_comments_product", productsCommentsController.indexByProducts);
 productsCommentsRoutes.get("/index_comments_user", productsCommentsController.indexByUser);
-productsCommentsRoutes.patch("/update", productsCommentsController.update);
-productsCommentsRoutes.delete("/delete", productsCommentsController.delete);
+productsCommentsRoutes.patch("/update", EnsureAuthenticated, productsCommentsController.update);
+productsCommentsRoutes.delete("/delete", EnsureAuthenticated, productsCommentsController.delete);
 
 module.exports = productsCommentsRoutes;

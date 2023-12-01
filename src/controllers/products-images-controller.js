@@ -25,15 +25,14 @@ class ProductsImagesController {
     return response.json(images);
   }
 
-  async indexByColor(request, response) {
-    //retorna um array de imagens por cor de um produto;
-    const { product_id, color_id } = request.query;
-    const productsImagesRepository = new ProductsImagesRepository();
+  async show(request, response) {
+    //retorna a primeira imagem de uma cor;
+    const { product_id, color_hex } = request.query;
+    const productsImagesRepository = new ProductsImagesRepository();1111111111
 
-    const array = await productsImagesRepository.findByColor(product_id, color_id);
-    const images = array.map(n => n.image);
+    const image = await productsImagesRepository.findByColor(product_id, color_hex);
 
-    return response.json(images);
+    return response.json(image);
   }
 
   async delete(request, response) {

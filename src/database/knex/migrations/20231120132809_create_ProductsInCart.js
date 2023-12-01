@@ -5,6 +5,7 @@ exports.up = knex => knex.schema.createTable("shopping_cart", table => {
   table.text("size");
   table.text("color_name");
   table.text("color_hex");
+  table.integer("quantity");
 });
 
 exports.down = knex => knex.schema.dropTable("shopping_cart");
