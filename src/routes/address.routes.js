@@ -11,7 +11,8 @@ addressRoutes.use(EnsureAuthenticated);
 
 addressRoutes.post("/", addressController.create);
 addressRoutes.get("/index", addressController.index);
-addressRoutes.patch("/update", addressController.update);
+addressRoutes.get("/show", addressController.show);
+addressRoutes.get("/show_frete", addressController.showFrete);
 addressRoutes.delete("/delete", addressController.delete);
 
 module.exports = addressRoutes;

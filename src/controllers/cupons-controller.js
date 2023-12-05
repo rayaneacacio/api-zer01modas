@@ -22,7 +22,7 @@ class CuponsController {
     const { name } = request.query;
     const cuponsRepository = new CuponsRepository();
 
-    const cupom = cuponsRepository.findCupom(name);
+    const cupom = await cuponsRepository.findCupom(name);
 
     return response.json(cupom);
   }
