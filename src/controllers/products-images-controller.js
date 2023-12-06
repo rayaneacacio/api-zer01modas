@@ -28,7 +28,7 @@ class ProductsImagesController {
   async show(request, response) {
     //retorna a primeira imagem de uma cor;
     const { product_id, color_hex } = request.query;
-    const productsImagesRepository = new ProductsImagesRepository();1111111111
+    const productsImagesRepository = new ProductsImagesRepository();
 
     const image = await productsImagesRepository.findByColor(product_id, color_hex);
 
